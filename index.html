@@ -17,6 +17,7 @@
       color: #fff;
       padding: 10px 20px;
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
     }
@@ -38,6 +39,7 @@
     }
     .header {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
@@ -47,9 +49,15 @@
     }
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
       margin-bottom: 20px;
+    }
+    .charts-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
     }
     .kpi-card {
       background: #fdfdfd;
@@ -75,7 +83,7 @@
     .down { color: red; }
     .grid-heatmap {
       display: grid;
-      grid-template-columns: repeat(13, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(20px, 1fr));
       gap: 4px;
       margin: 20px 0;
     }
@@ -86,23 +94,31 @@
       cursor: pointer;
     }
     .chart {
-      width: 100%;
-      height: 300px;
+      width: 100% !important;
+      height: auto !important;
       background-color: #fff;
       border-radius: 8px;
       padding: 10px;
     }
     .bottom-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
       margin-top: 20px;
     }
-    .charts-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-top: 20px;
+    @media (max-width: 768px) {
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav a {
+        margin: 5px 0 0 0;
+      }
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
     }
   </style>
 </head>
@@ -117,45 +133,31 @@
     </div>
   </div>
 
+  <!-- Page 1 -->
   <div class="container" id="page1">
     <div class="dashboard">
       <div class="header">
         <h2>KPI Summary</h2>
-        <div>Apr 15 - Apr 21</div>
+        <div>Apr 15 to Apr 21</div>
       </div>
       <div class="kpi-grid">
-        <div class="kpi-card">
-          <div class="kpi-title">🐣 Total Chick Sales</div>
-          <div class="kpi-value">2.3M chicks</div>
-          <div class="kpi-trend up">+5% vs last week</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-title">💰 Revenue</div>
-          <div class="kpi-value">Rp 12,5B</div>
-          <div class="kpi-trend down">-2%</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-title">📉 Underperforming</div>
-          <div class="kpi-value">6 units</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-title">💸 Avg Cost per Chick</div>
-          <div class="kpi-value">Rp 4.350</div>
-          <div class="kpi-trend up">+1.2%</div>
-        </div>
+        <div class="kpi-card"><div class="kpi-title">🐣 Total Chick Sales</div><div class="kpi-value">2.3M chicks</div><div class="kpi-trend up">+5% vs last week</div></div>
+        <div class="kpi-card"><div class="kpi-title">💰 Revenue</div><div class="kpi-value">Rp 12,5B</div><div class="kpi-trend down">-2%</div></div>
+        <div class="kpi-card"><div class="kpi-title">📉 Underperforming</div><div class="kpi-value">6 units</div></div>
+        <div class="kpi-card"><div class="kpi-title">💸 Avg Cost per Chick</div><div class="kpi-value">Rp 4.350</div><div class="kpi-trend up">+1.2%</div></div>
       </div>
     </div>
   </div>
 
+  <!-- Page 2 -->
   <div class="container" id="page2">
     <div class="dashboard">
       <div class="header">
         <h2>Farm Revenue Overview</h2>
-        <div>Apr 15 - Apr 21</div>
+        <div>Apr 15 to Apr 21</div>
       </div>
-
       <div class="kpi-grid">
-        <div class="kpi-card" style="grid-column: span 2;">
+        <div class="kpi-card">
           <div class="kpi-title">Revenue by Unit</div>
           <div class="grid-heatmap">
             <div class="farm-cell" style="background-color:#6fcf97" onclick="updateChartColor('#6fcf97')"></div>
@@ -165,107 +167,70 @@
             <div class="farm-cell" style="background-color:#6fcf97" onclick="updateChartColor('#6fcf97')"></div>
           </div>
         </div>
-        <div class="kpi-card" style="grid-column: span 2;">
+        <div class="kpi-card">
           <div class="kpi-title">Target vs Actual Revenue</div>
           <canvas id="revenueChart" class="chart"></canvas>
         </div>
       </div>
-
       <div class="bottom-grid">
-        <div class="kpi-card">
-          <div class="kpi-title">🏆 Best Performing Unit</div>
-          <div class="kpi-value">Rp 650M</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-title">🧢 Farm #27</div>
-          <div class="kpi-value">Rp 650M</div>
-        </div>
+        <div class="kpi-card"><div class="kpi-title">🏆 Best Performing Unit</div><div class="kpi-value">Rp 650M</div></div>
+        <div class="kpi-card"><div class="kpi-title">🧢 Farm #27</div><div class="kpi-value">Rp 650M</div></div>
       </div>
     </div>
   </div>
 
+  <!-- Page 3 -->
   <div class="container" id="page3">
     <div class="dashboard">
       <div class="header">
         <h2>Production Overview</h2>
-        <div>Apr 15 - Apr 21</div>
+        <div>Apr 15 to Apr 21</div>
       </div>
-
       <div class="kpi-grid">
-        <div class="kpi-card">
-          <div class="kpi-title">🥚 Total Eggs Produced</div>
-          <div class="kpi-value">5.1M eggs</div>
-          <div class="kpi-trend up">+3.2% vs last week</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-title">🐥 Hatch Rate</div>
-          <div class="kpi-value">88%</div>
-          <div class="kpi-trend up">+0.8%</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-title">📦 Stock Availability</div>
-          <div class="kpi-value">1.2M chicks</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-title">⏳ Avg Hatch Time</div>
-          <div class="kpi-value">21 days</div>
-        </div>
+        <div class="kpi-card"><div class="kpi-title">🥚 Total Eggs Produced</div><div class="kpi-value">5.1M eggs</div><div class="kpi-trend up">+3.2% vs last week</div></div>
+        <div class="kpi-card"><div class="kpi-title">🐥 Hatch Rate</div><div class="kpi-value">88%</div><div class="kpi-trend up">+0.8%</div></div>
+        <div class="kpi-card"><div class="kpi-title">📦 Stock Availability</div><div class="kpi-value">1.2M chicks</div></div>
+        <div class="kpi-card"><div class="kpi-title">⏳ Avg Hatch Time</div><div class="kpi-value">21 days</div></div>
       </div>
-
+      <div class="kpi-card">
+        <div class="kpi-title">Select Unit Hatch Rate %</div>
+        <div class="grid-heatmap" id="hatchHeatmap"></div>
+      </div>
+      <canvas id="hatchBar" class="chart"></canvas>
       <div class="charts-row">
         <canvas class="chart" id="eggTrend"></canvas>
-        <canvas class="chart" id="hatchBar"></canvas>
         <canvas class="chart" id="conversionChart"></canvas>
       </div>
     </div>
   </div>
 
+  <!-- Page 4 -->
   <div class="container" id="page4">
     <div class="dashboard">
       <div class="header">
         <h2>Team Performance</h2>
-        <div>Apr 15 - Apr 21</div>
+        <div>Apr 15 to Apr 21</div>
       </div>
-
       <div class="kpi-grid">
-        <div class="kpi-card">
-          <div class="kpi-title">🏅 Top Performing Farms</div>
-          <div class="kpi-value">Farm #12, #27, #33</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-title">💼 Team Productivity Score</div>
-          <div class="kpi-value">92/100</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-title">🎯 Avg Daily Goals Met</div>
-          <div class="kpi-value">85%</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-title">👷 Units Exceeding Target</div>
-          <div class="kpi-value">17 units</div>
-        </div>
+        <div class="kpi-card"><div class="kpi-title">🏅 Top Performing Farms</div><div class="kpi-value">Farm #12, #27, #33</div></div>
+        <div class="kpi-card"><div class="kpi-title">💼 Team Productivity Score</div><div class="kpi-value">92/100</div></div>
+        <div class="kpi-card"><div class="kpi-title">🎯 Avg Daily Goals Met</div><div class="kpi-value">85%</div></div>
+        <div class="kpi-card"><div class="kpi-title">👷 Units Exceeding Target</div><div class="kpi-value">17 units</div></div>
       </div>
-
       <canvas class="chart" id="teamChart"></canvas>
     </div>
   </div>
 
+  <!-- Scripts -->
   <script>
     const revenueChart = new Chart(document.getElementById('revenueChart'), {
       type: 'line',
       data: {
         labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        datasets: [{
-          label: 'Target',
-          data: [100, 120, 130, 150, 170, 180, 200],
-          borderColor: 'gray',
-          fill: false
-        }, {
-          label: 'Actual',
-          data: [90, 110, 120, 140, 160, 170, 190],
-          borderColor: '#6fcf97',
-          fill: false
-        }]
+        datasets: [
+          { label: 'Target', data: [100, 120, 130, 150, 170, 180, 200], borderColor: 'gray', fill: false },
+          { label: 'Actual', data: [90, 110, 120, 140, 160, 170, 190], borderColor: '#6fcf97', fill: false }
+        ]
       },
       options: { responsive: true }
     });
@@ -275,27 +240,39 @@
       revenueChart.update();
     }
 
-    new Chart(document.getElementById('eggTrend'), {
-      type: 'line',
+    const hatchBar = new Chart(document.getElementById('hatchBar'), {
+      type: 'bar',
       data: {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        labels: ['Unit 1'],
         datasets: [{
-          label: 'Egg Production',
-          data: [700000, 720000, 740000, 730000, 750000, 760000, 770000],
-          borderColor: '#2f80ed'
+          label: 'Hatch Rate %',
+          data: [88],
+          backgroundColor: '#bb6bd9'
         }]
       }
     });
 
-    new Chart(document.getElementById('hatchBar'), {
-      type: 'bar',
+    const heatmap = document.getElementById('hatchHeatmap');
+    for (let i = 1; i <= 52; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'farm-cell';
+      const rate = Math.floor(Math.random() * 21) + 80;
+      const color = `hsl(${120 - (rate - 80) * 6}, 70%, 60%)`;
+      cell.style.backgroundColor = color;
+      cell.title = `Unit ${i}: ${rate}%`;
+      cell.onclick = () => {
+        hatchBar.data.labels = [`Unit ${i}`];
+        hatchBar.data.datasets[0].data = [rate];
+        hatchBar.update();
+      };
+      heatmap.appendChild(cell);
+    }
+
+    new Chart(document.getElementById('eggTrend'), {
+      type: 'line',
       data: {
-        labels: ['Unit 1', 'Unit 2', 'Unit 3', 'Unit 4'],
-        datasets: [{
-          label: 'Hatch Rate %',
-          data: [88, 85, 90, 87],
-          backgroundColor: '#bb6bd9'
-        }]
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{ label: 'Egg Production', data: [700000, 720000, 740000, 730000, 750000, 760000, 770000], borderColor: '#2f80ed' }]
       }
     });
 
@@ -303,26 +280,16 @@
       type: 'bar',
       data: {
         labels: ['Eggs Collected', 'Fertilized', 'Hatched'],
-        datasets: [{
-          label: 'Conversion',
-          data: [5100000, 4600000, 4100000],
-          backgroundColor: ['#f2994a', '#f2c94c', '#6fcf97']
-        }]
+        datasets: [{ label: 'Conversion', data: [5100000, 4600000, 4100000], backgroundColor: ['#f2994a', '#f2c94c', '#6fcf97'] }]
       },
-      options: {
-        indexAxis: 'y'
-      }
+      options: { indexAxis: 'y' }
     });
 
     new Chart(document.getElementById('teamChart'), {
       type: 'bar',
       data: {
         labels: ['Farm 12', 'Farm 27', 'Farm 33', 'Farm 18'],
-        datasets: [{
-          label: 'Team Score',
-          data: [95, 92, 90, 85],
-          backgroundColor: '#27ae60'
-        }]
+        datasets: [{ label: 'Team Score', data: [95, 92, 90, 85], backgroundColor: '#27ae60' }]
       }
     });
   </script>
